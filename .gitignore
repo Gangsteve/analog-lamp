@@ -1,0 +1,29 @@
+# KiCad backups
+lamp-backups/
+*.bak
+
+# KiCad auto-saved and temp files
+*-backups/
+fp-lib-table.bak
+*-save.kicad_sch
+*-save.kicad_pcb
+*-rescue.kicad_sch
+*-rescue.kicad_pcb
+
+# KiCad plot/output artifacts
+Gerbers/
+output/
+plot/
+*.gbr
+*.drl
+*.pos
+*.rpt
+
+# KiCad cache files
+__MACOSX/
+.DS_Store
+
+# LTSpice output files
+*.raw
+*.log
+*.out

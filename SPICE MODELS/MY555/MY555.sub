@@ -1,0 +1,25 @@
+* MY555 - behavioral NE555 for LTspice
+* Pin order matches the schematic netlist: gnd trig out rst cv thrs dis vcc
+* A-device convention: t1..t5 inputs, t6/t7 complementary outputs, t8 common
+.subckt MY555 gnd trig out rst cv thrs dis vcc
+* internal 5k-5k-5k divider: cv pin = 2/3 VCC, node onethird = 1/3 VCC
+R1 vcc cv 5K
+R2 cv onethird 5K
+R3 onethird gnd 5K
+* comparators (TRIG priority: if TRIG < 1/3 VCC, reset latch regardless of THRS)
+Bset SET gnd V = IF((V(thrs) > V(cv)) & (V(trig) > V(onethird)), 5, 0) tripdv=0.1 tripdt=1u
+Bres RES gnd V = IF(V(trig) < V(onethird), 5, 0) tripdv=0.1 tripdt=1u
+* SR latch (S=1 -> Q=1 out high; R=1 -> Q=0 out low). Q at t7, complement unused.
+* Bres(TRIG<1/3) drives S: output high. Bset(THRS>2/3) drives R: output low.
+A1 RES SET gnd gnd gnd gnd Q gnd SRFLOP Vhigh=5 Vlow=0 Trise=50n Tfall=50n tripdt=1u
+* reset (active low) override
+A2 rst gnd gnd gnd gnd gnd RSTHI gnd SCHMITT Vt=.7 Vh=.3 Vhigh=5 Vlow=0 Trise=50n Tfall=50n tripdt=1u
+* gate latch with reset override (t6=QOUT, t7=NQOUT complementary outputs)
+A3 Q RSTHI gnd gnd gnd NQOUT QOUT gnd AND Vhigh=5 Vlow=0 Trise=50n Tfall=50n tripdt=1u
+* push-pull output stage (no shoot-through: SW hysteresis gap 2.0..3.0 V)
+S2 vcc out QOUT gnd S556
+S3 out gnd NQOUT gnd S556
+* discharge transistor (closed when output low)
+S1 dis gnd NQOUT gnd S556
+.model S556 SW(Ron=2 Roff=1G Vt=2.5 Vh=1)
+.ends MY555

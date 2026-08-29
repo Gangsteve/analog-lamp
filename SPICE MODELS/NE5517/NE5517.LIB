@@ -1,0 +1,47 @@
+*NE5517 Rev - 10 7 2018 ON Apps
+*PINOUT ORDER    1      2   3    4     5      6    7      8
+.SUBCKT NE5517 IABC IN- IN+ V- INBUF VO V+ OUTBUF
+QT27        9 9 V+  Q_JS06_P_1 
+QT21        10 9 V+  Q_JS06_P_1 
+QT26        V- INBUF 10  Q_JS06_P_1 
+QT25        V+ 10 OUTBUF  Q_JS04_N_1 
+QT24        9 11 V-  Q_JS04_N_1 
+QT23        11 11 V-  Q_JS04_N_1 
+QT22        12 12 11  Q_JS04_N_1 
+QT20        13 13 V+  Q_JS06_P_1 
+QT19        12 13 V+  Q_JS06_P_1 
+R1          14 V- 3.3K 
+QT18        13 12 14  Q_JS04_N_1 
+QT17        13 15 14  Q_JS04_N_1 
+QT16        17 16 V-  Q_JS04_N_1 
+QT15        16 16 V-  Q_JS04_N_1 
+QT14        VO 17 16  Q_JS04_N_1 
+QT13        VO 19 18  Q_JS06_P_1 
+QT12        18 18 V+  Q_JS06_P_1 
+QT11        19 18 V+  Q_JS06_P_1 
+QT10        17 21 20  Q_JS06_P_1 
+QT9         19 IN+ 22  Q_JS04_N_1 
+QT4         IABC 15 V-  Q_JS04_N_1 
+QT8         15 15 V-  Q_JS04_N_1 
+QT7         22 IABC 15  Q_JS04_N_1 
+QT6         IN+ 23 23  Q_JS04_N_1 
+QT5         IN- 23 23  Q_JS04_N_1 
+QT3         20 20 V+  Q_JS06_P_1 
+QT2         21 20 V+  Q_JS06_P_1 
+QT1         21 IN- 22  Q_JS04_N_1 
+.MODEL Q_JS06_P_1 PNP( IS=1.77F NF=1 NR=1 RE=732M RC=1 
++      RB=10 VAF=23.3 VAR=11.7 ISE=73.2F ISC=73.2F 
++      ISS=0 NE=1.62 NC=1.62 NS=1 BF=289 
++      BR=5 IKF=29.2M IKR=29.2M CJC=6.95P CJE=6.86P 
++      CJS=0 VJC=374M VJE=100M VJS=750M MJC=340M 
++      MJE=199M MJS=0 TF=637P TR=82.8N EG=1.11 
++      KF=0 AF=1 )
+.MODEL Q_JS04_N_1 NPN( IS=9.99F NF=1 NR=1 RE=2.51 RC=1 
++      RB=10 VAF=40 VAR=20 ISE=4.03P ISC=4.03P 
++      ISS=0 NE=1.78 NC=1.78 NS=1 BF=679 
++      BR=5 IKF=13.8M IKR=13.8M CJC=3.6P CJE=3.99P 
++      CJS=0 VJC=878M VJE=16.1 VJS=750M MJC=307M 
++      MJE=2.01 MJS=0 TF=531P TR=69N EG=1.11 
++      KF=0 AF=1 )
+.ENDS
+.END MODEL NE5517
