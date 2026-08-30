@@ -1,0 +1,39 @@
+Version 4
+SymbolType CELL
+LINE Normal -20 -128 -20 -112
+LINE Normal 20 -128 20 -112
+LINE Normal -8 -100 8 -100
+RECTANGLE Normal -112 -128 112 128
+ARC Normal -20 -124 4 -100 -20 -112 -8 -100
+ARC Normal -4 -124 20 -100 8 -100 20 -112
+WINDOW 0 0 -64 Center 2
+WINDOW 3 0 64 Center 2
+SYMATTR Value LM331
+SYMATTR Prefix X
+SYMATTR SpiceModel LM331.sub
+SYMATTR Value2 LM331
+SYMATTR Description Behavioral LM331 F-to-V converter: input comparator, one-shot (1.1*Rt*Ct), switched current source i=1.9V/Rs. Pin-compatible with LM331 DIP-8.
+PIN -112 -96 LEFT 8
+PINATTR PinName IOUT
+PINATTR SpiceOrder 1
+PIN -112 -32 LEFT 8
+PINATTR PinName IREF
+PINATTR SpiceOrder 2
+PIN -112 32 LEFT 8
+PINATTR PinName FOUT
+PINATTR SpiceOrder 3
+PIN -112 96 LEFT 8
+PINATTR PinName GND
+PINATTR SpiceOrder 4
+PIN 112 96 RIGHT 8
+PINATTR PinName RC
+PINATTR SpiceOrder 5
+PIN 112 32 RIGHT 8
+PINATTR PinName THRESH
+PINATTR SpiceOrder 6
+PIN 112 -32 RIGHT 8
+PINATTR PinName COMPIN
+PINATTR SpiceOrder 7
+PIN 112 -96 RIGHT 8
+PINATTR PinName Vcc
+PINATTR SpiceOrder 8

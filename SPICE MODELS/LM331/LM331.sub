@@ -1,0 +1,25 @@
+* LM331 behavioral F-to-V model for LTspice
+* Built by reusing the verified MY555.sub core as the internal 1-shot timer
+* Pin order: iout iref fout gnd rc thresh compin vcc
+* External parts (typical F-to-V application):
+*   pin 5 (rc): Rt to VCC, Ct to GND   -> one-shot width t = 1.1*Rt*Ct
+*   pin 2 (iref): Rs to GND            -> switched current i = 1.90V / Rs
+*   pin 1 (iout): RL to GND, CL to GND -> Vout = i * (1.1*Rt*Ct) * f * RL
+*   pin 6/7: input comparator; negative-going edge at pin 6 triggers the timer
+.subckt LM331 iout iref fout gnd rc thresh compin vcc
+* input comparator: fires when V(compin) > V(thresh)
+Bcmp cmp gnd V = IF(V(compin) > V(thresh), 5, 0) tripdv=0.1 tripdt=100n
+* MY555 trigger is active-low (<1/3 VCC): invert the comparator
+Btrig trig gnd V = 5 - V(cmp) tripdv=0.1 tripdt=100n
+* one-shot timer: MY555 monostable, timing = 1.1*Rt*Ct on pin rc
+Xone gnd trig one vcc cv rc rc vcc MY555
+Ccv cv gnd 100p
+* current reference: hold pin 2 at ~1.90 V, sense the set current
+Vs iref p2s 0
+Bref 0 p2s I = IF(V(p2s) < 1.9, 1000*(1.9 - V(p2s)), 0) tripdv=1m tripdt=100n
+* switched current output: i = set current while one-shot is high
+Bout 0 iout I = IF(V(one) > 2.5, -I(Vs), 0) tripdv=1m tripdt=100n
+* frequency output (open-collector, unused in F-to-V; needs external pull-up)
+Sfo fout gnd one gnd LM331S
+.model LM331S SW(Ron=2 Roff=1G Vt=2.5 Vh=1)
+.ends LM331

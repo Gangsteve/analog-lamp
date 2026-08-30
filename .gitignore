@@ -27,3 +27,4 @@ __MACOSX/
 *.raw
 *.log
 *.out
+*.db
